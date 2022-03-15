@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <script src="assets/js/random.js" defer></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        * {
+            margin: 15px;
+            color: white;
+            background: black;
+            text-align: center;
+        }
+        input {
+            color: white;
+            width: 25vw;
+            height: 25px;
+            border-radius: 5px;
+            border: 1px solid white;
+        }
+        input::placeholder {
+            color: rgb(168, 168, 168);
+            font-style: italic;
+        }
+        button {
+            width: 15vw;
+            border-radius: 5px;
+            border: 1px solid white;
+        }
+    </style>
+
+</head>
+<body>
+    <!-- <p id="output">Beans</p><br>
+    <button id="first">Click</button>
+    <button id="second" hidden>Click</button><br><br><br>
+    <button id="remove">Delete Source Code</button><br>
+    <img src="assets/images/checkout.png" alt="Image" id="randomImage"><br><br>
+    <p id="demo"></p> -->
+    <strong><label for="encInput">Encrypt:</label></strong><br><br>
+    <input type="text" name="encInput" id="encInput" placeholder="Input Text" autocomplete="off"><br><br>
+    <input type="text" name="encPass" id="encPass" placeholder="Create Password" autocomplete="off"><br><span>*For Optimal Encyption Password Should Be 16 Or More Characters</span><br></span>
+    <button id="enc">Encrypt Text</button><br><br>
+    <p id="encOutput"></p>
+    <hr>
+    <!-- Text TO DECRYPT -->
+    <strong><label for="decInput">Decrypt:</label></strong><br><br>
+    <input type="text" name="decInput" id="decInput" placeholder="Input Encrypted Text" autocomplete="off"><br><br>
+    <input type="text" name="decPass" id="decPass" placeholder="Input Password" autocomplete="off"><br><br>
+    <button id="dec">Decyrpt Text</button><br><br>
+    <p id="decOutput"></p>
+</body>
+<script>
+    var encButton = document.getElementById("enc");
+    var decButton = document.getElementById("dec");
+    if (encButton) {
+        encButton.addEventListener("click", encryptText)
+    };
+    if (decButton) {
+        decButton.addEventListener("click", decryptText);
+    }
+    function encryptText() {
+        var out = document.getElementById("encOutput");
+        var textToEncrypt = document.getElementById("encInput").value;
+        var textPassword = document.getElementById("encPass").value;
+        if (textToEncrypt === textPassword) {
+            alert("The Password Should Not Be The Same As The Text");
+            return;
+        } else if (textPassword.length < 16) {
+            alert("The Password Should Be More Than 16 Characters")
+            return;
+        } else {
+            var textFinshed = CryptoJS.AES.encrypt(textToEncrypt, textPassword);
+            console.log(textFinshed);
+            out.innerText = textFinshed;
+            navigator.clipboard.writeText(out.innerText);
+
+        }
+    }
+    function decryptText() {
+        var decOutput = document.getElementById("decOutput");
+        var textToDecrypt = document.getElementById("decInput").value;
+        var decPass = document.getElementById("decPass").value;
+        var decryptedText = CryptoJS.AES.decrypt(textToDecrypt, decPass).toString(CryptoJS.enc.Utf8);
+        console.log(decryptText);
+        console.log(decryptedText);
+        decOutput.innerText = decryptedText;
+    }
+
+
+</script>
+
+
+
+<!-- <script defer>
+    var text = "Cool Beans";
+    var pass = "123"
+
+    var enc = CryptoJS.AES.encrypt(text, pass);
+    var dec = CryptoJS.AES.decrypt(enc, pass);
+    console.log(enc);
+    console.log(dec);
+    var out = document.getElementById('demo');
+    out.innerHTML = dec.toString(CryptoJS.enc.Utf8);
+
+</script> -->
+</html>
